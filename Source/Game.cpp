@@ -3,7 +3,7 @@
 #include "Game.h"
 
 CGame::CGame(){
-	estado = 0;
+	estado = ESTADO_INICIANDO;
 }
 
 // Con esta función eliminaremos todos los elementos en pantalla
@@ -18,13 +18,18 @@ bool CGame::Start()
 	while (salirJuego == false){
             
 		//Maquina de estados
-		switch(estado){
-			case 0: //INICIALIZAR
+		switch(estado)
+		{
+			case Estado::ESTADO_INICIANDO: 
 			break;
-			case 1:	//JUGAR	
+			case Estado::ESTADO_MENU:
 			break;
-			case 2: //SALIR
-				salirJuego = true;
+			case Estado::ESTADO_JUGANDO:
+			break;
+			case Estado::ESTADO_FINALIZADO:
+			break;
+			case Estado::ESTADO_TERMINANDO: 
+			salirJuego = true;
 			break;
 		};
     }
