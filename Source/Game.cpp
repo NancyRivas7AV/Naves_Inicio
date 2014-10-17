@@ -9,9 +9,27 @@ CGame::CGame()
 	estado = ESTADO_INICIANDO;//Corregido Maestro//
 	atexit(SDL_Quit);
 
+	//ACT3: Mal, este codigo no va aqui.
+	//if (SDL_Init(SDL_INIT_VIDEO)){
+	//	printf("Error %s ", SDL_GetError());
+	//	exit(EXIT_FAILURE);	
 
+	//}
 
+	//screen = SDL_SetVideoMode(640,480,24, SDL_HWSURFACE );
 
+	//if (screen == NULL){
+	//	printf("Error %s ", SDL_GetError());
+	//	exit(EXIT_FAILURE); 
+	//}
+	//SDL_Flip(screen);
+	//SDL_WM_SetCaption("Mi primer Juego", NULL);
+
+}
+
+//ACT3: Mal, falto crear el metodo "iniciando()"
+void CGame::Iniciando()
+{
 	if (SDL_Init(SDL_INIT_VIDEO)){
 		printf("Error %s ", SDL_GetError());
 		exit(EXIT_FAILURE);	
@@ -24,9 +42,8 @@ CGame::CGame()
 		printf("Error %s ", SDL_GetError());
 		exit(EXIT_FAILURE); 
 	}
-	SDL_Flip(screen);
+	
 	SDL_WM_SetCaption("Mi primer Juego", NULL);
-
 }
 
 
@@ -46,6 +63,10 @@ bool CGame::Start()
 		switch(estado)
 		{
 		case Estado::ESTADO_INICIANDO: 
+			Iniciando();//ACT3: Mal, falto mandar a llamar este metodo.
+			estado=ESTADO_MENU;
+			break;//ACT2: Mal, este break debe de ir.
+		case Estado::ESTADO_MENU:
 			{
 				nave = SDL_LoadBMP("../Data/MiNave.bmp");
 
@@ -66,7 +87,6 @@ bool CGame::Start()
 
 				SDL_FreeSurface(nave);
 			}
-		case Estado::ESTADO_MENU:
 			break;
 		case Estado::ESTADO_JUGANDO:
 			break;
