@@ -3,50 +3,31 @@
 #include "Game.h"
 #include <SDL_image.h>
 #include <SDL.h>
+#include "Config.h"
+#include "Sprite.h"
 
 CGame::CGame()
 {
-	estado = ESTADO_INICIANDO;//Corregido Maestro//
+	estado = Estado::ESTADO_INICIANDO;
 	atexit(SDL_Quit);
-
-	//ACT3: Mal, este codigo no va aqui.
-	//if (SDL_Init(SDL_INIT_VIDEO)){
-	//	printf("Error %s ", SDL_GetError());
-	//	exit(EXIT_FAILURE);	
-
-	//}
-
-	//screen = SDL_SetVideoMode(640,480,24, SDL_HWSURFACE );
-
-	//if (screen == NULL){
-	//	printf("Error %s ", SDL_GetError());
-	//	exit(EXIT_FAILURE); 
-	//}
-	//SDL_Flip(screen);
-	//SDL_WM_SetCaption("Mi primer Juego", NULL);
-
 }
+void CGame::Iniciando(){
 
-//ACT3: Mal, falto crear el metodo "iniciando()"
-void CGame::Iniciando()
-{
-	if (SDL_Init(SDL_INIT_VIDEO)){
+
+	if (SDL_Init(SDL_INIT_AUDIO)){
 		printf("Error %s ", SDL_GetError());
-		exit(EXIT_FAILURE);	
+		exit(EXIT_FAILURE);
 
 	}
 
-	screen = SDL_SetVideoMode(640,480,24, SDL_HWSURFACE );
+	screen = SDL_SetVideoMode(WIDTH_SCREEN, HEIGHT_SCREEN, 24, SDL_HWSURFACE);
 
 	if (screen == NULL){
 		printf("Error %s ", SDL_GetError());
-		exit(EXIT_FAILURE); 
+		exit(EXIT_FAILURE);
 	}
-	
-	SDL_WM_SetCaption("Mi primer Juego", NULL);
+
 }
-
-
 void CGame::Finalize()
 {
 	SDL_Quit();
@@ -54,49 +35,44 @@ void CGame::Finalize()
 
 bool CGame::Start()
 {
-	// Esta variable nos ayudara a controlar la salida del juego...
-	int salirJuego = false;
+	int bandera = 0;
+	int salirJuego = false; char menu;
 	while (salirJuego == false)
 	{
-
-		//Maquina de estados
-		switch(estado)
+	
+		switch (estado)
 		{
-		case Estado::ESTADO_INICIANDO: 
-			Iniciando();//ACT3: Mal, falto mandar a llamar este metodo.
-			estado=ESTADO_MENU;
-			break;//ACT2: Mal, este break debe de ir.
+		case Estado::ESTADO_INICIANDO:
+			printf("\n1) ESTADO_INICIANDO");
+			estado = ESTADO_MENU;
+			break;
+
 		case Estado::ESTADO_MENU:
-			{
-				nave = SDL_LoadBMP("../Data/MiNave.bmp");
-
-				SDL_Rect Fuente;  
-				Fuente.x = 90;
-				Fuente.y = 152;
-				Fuente.w = 242;
-				Fuente.h = 76;
-				SDL_Rect destino;
-				destino.x = 100;
-				destino.y = 100;
-				destino.w = 100;
-				destino.h = 100;
-
-				SDL_BlitSurface(nave, &Fuente, screen, &destino);
-
-				SDL_BlitSurface(nave, NULL, screen, NULL);
-
-				SDL_FreeSurface(nave);
-			}
+			printf("\n2) ESTADO_MENU");
+			if( bandera > 0)
+			{estado = ESTADO_FINALIZADO;}
+			else
+			{estado = ESTADO_JUGANDO;}
 			break;
+
 		case Estado::ESTADO_JUGANDO:
+			printf("\n3) ESTADO_JUGANDO");
+			estado = ESTADO_TERMINANDO;
 			break;
+
+		case Estado::ESTADO_TERMINANDO:
+			printf("\n4) ESTADO_TERMINANDO");
+			bandera = bandera +1;
+			estado = ESTADO_MENU;
+			break;
+
 		case Estado::ESTADO_FINALIZADO:
-			break;
-		case Estado::ESTADO_TERMINANDO: 
+			printf("\n5) ESTADO_FINALIZADO");
+			getchar();
 			salirJuego = true;
 			break;
 		};
-		SDL_Flip(screen);// imprimir en pantalla la variable screen
+
 	}
 	return true;
 }
