@@ -1,6 +1,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
-#include "Nave.h"
+#include "Sprite.h"
+
 
 class CGame
 {
@@ -25,9 +26,7 @@ private:
 	void Iniciando();
 	Uint8 *keys;
 	SDL_Event event;
-
-	SDL_Surface *screen;
-	Nave * nave;
+	SDL_Surface * screen;
+	Sprite * nave;
 	Estado estado;
-
 };

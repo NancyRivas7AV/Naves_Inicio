@@ -1,12 +1,12 @@
 #include "Game.h"
 #include  <stdlib.h>
 
-
+// La función principal del juego
 int main(int argc, char *argv[]){
-	CGame *navesGame = new CGame();
+	CGame *navesGame = new CGame();//Cra un objeto usando apuntadores//
 
 	if(navesGame->Start())   
-		navesGame->Finalize(); 
+		navesGame->Finalize(); // Liberamos los recursos utilizados//
     
     return EXIT_SUCCESS;
 }
