@@ -1,27 +1,43 @@
 #include "Sprite.h"
+#include "SpriteDef.h"
 #include "SDL.h"
 
+void Sprite::CargarImagen(char*ruta){
+
+		image= SDL_LoadBMP(ruta);
+		SDL_SetColorKey(image, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(image->format,255,0,0));
+		
+}
 
 
-void Sprite::CargarImagen(char * path){
-image = SDL_LoadBMP(path);
+
+Sprite::Sprite(SDL_Surface * screen){
+	this->screen =screen;
+}
+
+Sprite::~Sprite(){
+	SDL_FreeSurface(image);
+};
+
+
+void Sprite::PintarModulo(int id, int x, int y){
+SDL_Rect src;
+	src.x= spriteDef.modulo [id].x;
+	src.y= spriteDef.modulo [id].y;
+	src.w= spriteDef.modulo [id].w;
+	src.h= spriteDef.modulo [id].h;
+	SDL_Rect dest;
+	dest.x =x;
+	dest.y =y;
+	SDL_BlitSurface(image, &src, screen, &dest);
 
 }
-	Sprite::Sprite(SDL_Surface * screen){
-	this->screen = screen;
-};
-Sprite::~Sprite(){
-SDL_FreeSurface(image);
-};
+int Sprite::WidthModule(int id){
+	return spriteDef.modulo[id].w;
+	
+}
 
-void Sprite::PintarModulo(int nombre, int x, int y){
-	SDL_Rect src;
-	src.x = spriteDef.modulos[nombre].x;
-	src.y = spriteDef.modulos[nombre].y;
-	src.w = spriteDef.modulos[nombre].w;
-	src.h = spriteDef.modulos[nombre].h;
-	SDL_Rect dest;
-	dest.x = x;
-	dest.y = y;
-	SDL_BlitSurface(image, &src, screen, &dest);
-};
+int Sprite::HeightModule(int id){
+	return spriteDef.modulo[id].h;
+	
+}
