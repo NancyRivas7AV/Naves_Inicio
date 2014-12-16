@@ -38,7 +38,11 @@ void CGame::Iniciando(){
 
 	for	(int i=0;i<10;i++)
 	{
+<<<<<<< HEAD
 		enemigoArreglo[i] = new Nave(screen, "../Data/enemigo.bmp",i*65,0,MODULO_ENEMIGO_NAVE);
+=======
+		enemigoArreglo[i] = new Nave(screen, "../Data/enemigo.bmp",i*65,0,MODULO_ENEMIGO_NAVE	);
+>>>>>>> origin/master
 	}
 
 
